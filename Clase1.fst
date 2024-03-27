@@ -33,19 +33,19 @@ let impar (x:int) : bool = x % 2 = 1
 
 (* Dadas estas definiciones, dé un tipo a incr que diga
 que dado un número par, devuelve un número impar. *)
-// let incr'''' (x:...) : .... = x+1
+let incr'''' (x: int{par x}) : (y: int{impar y}) = x+1
 
 (* ¿Por qué falla la siguiente definición? Arreglarla. *)
 // El atributo expect_failure causa que F* chequeé que la definición
 // subsiguiente falle. Borrarlo para ver el error real.
 [@@expect_failure]
-let muldiv (a b : int) : y:int{y = a} = assume (b <> 0); (a / b) * b
+let muldiv (a: int) (b : int{b <> 0}) : y:int{y = a} = (a / b) * b
 
 (* Defina una función de valor absoluto *)
 let abs (x:int) : nat = if x >= 0 then x else -x
 
 (* Defina una función que calcule el máximo de dos enteros. *)
-let max (x y : int) : z:int{(z = x \/ z = y) /\ z >= x /\ z >= y} = if x >= y then x else y
+let max (x y : int) : z:int{(z = x || z = y) && z >= x && z >= y} = if x >= y then x else y
 
 (* Dé tipos más expresivos a max.
    1- Garantizando que el resultado es igual a alguno de los argumentos
