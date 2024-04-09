@@ -20,7 +20,7 @@ let lift (ty : l_ty) : Type =
 
 val eval (#ty:l_ty) (e : expr ty) : Tot (lift ty)
 
-let rec eval (#ty:l_ty) (e : expr ty) : Tot (lift ty) =
+let rec eval (#ty:l_ty) (e : expr ty) : Tot (lift ty) (decreases e) =
   match e with
   | EInt n -> n
   | EBool b -> b
