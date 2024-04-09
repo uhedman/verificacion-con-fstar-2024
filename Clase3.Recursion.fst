@@ -55,11 +55,9 @@ let rec flip (x:int) : Tot int (decreases abs x)=
 
 // -5 -> 4 -> -4 -> 3 -> -3 -> 2 -> -2 -> 1 -> -1 -> 0
 // Elija una métrica para demostrar la terminación (un poco más dificil)
-let rec flip2 (x:int) : Tot int (decreases %[0; x]) =
-  if x = 0 then 0
-  else if x > 0 then flip2' (-x)
-  else (* x < 0 *) flip2' (-x - 1)
-and flip2' (x:int) : Tot int (decreases %[1; x]) =
+let sign : int -> nat = function x -> if x < 0 then 0 else 1
+
+let rec flip2 (x:int) : Tot int (decreases %[abs x; sign x]) =
   if x = 0 then 0
   else if x > 0 then flip2 (-x)
   else (* x < 0 *) flip2 (-x - 1)
